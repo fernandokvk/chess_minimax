@@ -11,8 +11,8 @@ import java.util.Timer;
 public class Main {
     // turn = 0 -> white
     // turn = 1 -> black
-    private static int WHITE_DEPTH = 3;
-    private static int BLACK_DEPTH = 1;
+    private static final int WHITE_DEPTH = 3;
+    private static final int BLACK_DEPTH = 1;
 
     public static void main(String[] args) {
         String testFen = "6kr/8/8/8/8/8/8/RK6 w - - 0 1";
@@ -34,19 +34,7 @@ public class Main {
         System.out.println("ending fen:" + board.fen());
     }
 
-    public static boolean gameEndingConditions(Board board) {
-        if (board.isCheckmate()) {
-            System.out.println("Checkmate");
-            return true;
-        } else if (board.isStalemate()) {
-            System.out.println("Stalemate");
-            return true;
-        } else if (board.isInsufficientMaterial()) {
-            System.out.println("Insufficient Material");
-            return true;
-        }
-        return false;
-    }
+
 
     public static Move getMinimaxMove(Node rootNode, int depth) {
         ArrayList<Node> moveCandidates = new ArrayList<>();
@@ -69,8 +57,8 @@ public class Main {
         }
     }
 
-    public static void initializeTree(Node parentNode, int depth, int nodeDepth) {
-        if (depth > 0) {
+    public static void initializeTree(Node parentNode, int maxDepth, int nodeDepth) {
+        if (maxDepth > 0) {
             Board parentBoard = parentNode.getBoard();
             ArrayList<Move> legalMoves = parentBoard.legalMoves();
             for (Move legalMove : legalMoves) {
@@ -78,7 +66,7 @@ public class Main {
                 clonedBoard.apply(legalMove);
                 Node node = new Node(clonedBoard, parentNode, legalMove, nodeDepth + 1);
                 parentNode.addNodeAsChild(node);
-                initializeTree(node, depth - 1, nodeDepth + 1);
+                initializeTree(node, maxDepth - 1, nodeDepth + 1);
             }
         }
     }
@@ -120,34 +108,23 @@ public class Main {
     }
 
 
-    public static void randomDebug(Board board) {
-        ArrayList<Move> legalMoves = board.legalMoves();
-        board.apply(legalMoves.get(0));
-        System.out.println("turn: " + board.turn);
-        System.out.println(board);
-
-        legalMoves = board.legalMoves();
-        board.apply(legalMoves.get(0));
-        System.out.println("turn: " + board.turn);
-        System.out.println(board);
-
-        legalMoves = board.legalMoves();
-        board.apply(legalMoves.get(0));
-        System.out.println("turn: " + board.turn);
-        System.out.println(board);
-    }
 
     public static String intToColor(int x) {
         return x == 0 ? "WHITE" : "BLACK";
     }
 
-    public static void checkmate(Board board) {
-        if (!board.isCheckmate()) {
-            //isCheckmate -> returns true if you checkmate the opponent's king (win)
-            int kingPos = board.getKingPos(0);
-            System.out.println("--------------" + intToColor(board.getPieceColorAt(kingPos)));
 
+    public static boolean gameEndingConditions(Board board) {
+        if (board.isCheckmate()) {
+            System.out.println("Checkmate");
+            return true;
+        } else if (board.isStalemate()) {
+            System.out.println("Stalemate");
+            return true;
+        } else if (board.isInsufficientMaterial()) {
+            System.out.println("Insufficient Material");
+            return true;
         }
+        return false;
     }
-
 }

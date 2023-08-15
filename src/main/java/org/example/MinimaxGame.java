@@ -13,9 +13,10 @@ public class MinimaxGame {
     // turn = 1 -> black
     private static int WHITE_DEPTH = 2;
     private static int BLACK_DEPTH = 2;
+    public static EndingCondition endingCondition;
     //  PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 
-    public static void newMinimaxGame(Board mainBoard, int whiteDepth, int blackDepth){
+    public static void newMinimaxGame(Board mainBoard, int whiteDepth, int blackDepth) {
         WHITE_DEPTH = whiteDepth;
         BLACK_DEPTH = blackDepth;
         System.out.println("WHITE_DEPTH:" + WHITE_DEPTH + " - BLACK_DEPTH:" + BLACK_DEPTH);
@@ -120,12 +121,15 @@ public class MinimaxGame {
         if (board.isCheckmate()) {
             System.out.println("******\tCheckmate\t******");
             System.out.println(intToColor(board.negColor(board.turn)) + " wins");
+            endingCondition = board.negColor(board.turn) == 0 ? EndingCondition.WHITE_CHECKMATE : EndingCondition.BLACK_CHECKMATE;
             return true;
         } else if (board.isStalemate()) {
             System.out.println("******\tStalemate\t******");
+            endingCondition = EndingCondition.STALEMATE;
             return true;
         } else if (board.isInsufficientMaterial()) {
             System.out.println("******\tInsufficient Material\t******");
+            endingCondition = EndingCondition.INSUFFICIENT_MATERIAL;
             return true;
         }
         return false;

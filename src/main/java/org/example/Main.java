@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         int whiteDepth = 3;
-        int blackDepth = 3;
+        int blackDepth = 1;
 
 
         if (args.length > 0) {
@@ -21,7 +21,7 @@ public class Main {
         }
 
 //        Board mainBoard = new Board("1kr5/8/8/8/8/8/8/1KQRRB2 w - - 0 1");
-        int numberOfGames = 5;
+        int numberOfGames = 50;
         ArrayList<EndingCondition> endingConditions = new ArrayList<>();
         for (int i = 0; i < numberOfGames; i++) {
             Board mainBoard = new Board(true);

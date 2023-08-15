@@ -14,7 +14,7 @@ public class UCB {
     }
 
     public void updateValue(int parentVisitCount, int childVisitCount) {
-        double epsilon = 1e-6; // Small constant to prevent division by zero
+        double epsilon = 1e-6;
         this.explorationTerm = EXPLORATION_CONSTANT * 2 * Math.sqrt(Math.log(parentVisitCount) / (childVisitCount + epsilon));
         this.value = exploitTerm + explorationTerm;
     }

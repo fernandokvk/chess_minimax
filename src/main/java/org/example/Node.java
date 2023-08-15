@@ -25,7 +25,7 @@ public class Node {
         this.parent = parentNode;
         this.move = legalMove;
         this.nodeDepth = nodeDepth;
-        this.value = evaluate();
+//        this.value = evaluate();
     }
 
     public void addNodeAsChild(Node child) {
@@ -54,8 +54,8 @@ public class Node {
     public int evaluate() {
         int blackScore = 0;
         int whiteScore = 0;
-        int[] pieceValues = {1, 3, 3, 5, 9, 0};
-        //  EMPTY, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
+        int[] pieceValues = Main.pieceValues;
+        //  PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 
         for (int i = 21; i < 99; i++) {
             int piece = this.board.getPieceAt(i);
@@ -84,6 +84,10 @@ public class Node {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int getNodeDepth() {
+        return nodeDepth;
     }
 
     @Override
